@@ -1,11 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Page</title>
+    <title>Ти готова?</title>
+    <style>
+        body { 
+            background-color: black; 
+            color: white; 
+            text-align: center; 
+            font-family: Arial, sans-serif; 
+            margin-top: 50px; 
+        }
+        h2 { font-size: 30px; }
+        button { 
+            font-size: 20px; 
+            padding: 10px 20px; 
+            margin: 10px; 
+            cursor: pointer; 
+            background-color: white; 
+            border: none; 
+            border-radius: 5px; 
+        }
+        #heart-container {
+            display: none;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+            margin: 2px;
+            opacity: 0;
+            position: absolute;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, GitHub Pages!</h1>
+
+    <h2>Ти готова?</h2>
+    <button onclick="nextStep()">Да</button>
+    <button onclick="nextStep()">Звісно</button>
+
+    <script>
+        function nextStep() {
+            document.body.innerHTML = `
+                <h2>З 8 березня!</h2>
+                <button onclick="showHeart()">Нажми ще раз :)</button>
+            `;
+        }
+
+        function showHeart() {
+            document.body.innerHTML = `<h2>Ти мені нравишся)</h2><div id="heart-container"></div>`;
+            createHeart();
+        }
+
+        function createHeart() {
+            const heartContainer = document.getElementById('heart-container');
+            heartContainer.style.display = 'block';
+            const heartShape = [
+                [0,0,1,1,0,0,1,1,0,0],
+                [0,1,1,1,1,1,1,1,1,0],
+                [1,1,1,1,1,1,1,1,1,1],
+                [1,1,1,1,1,1,1,1,1,1],
+                [0,1,1,1,1,1,1,1,1,0],
+                [0,0,1,1,1,1,1,1,0,0],
+                [0,0,0,1,1,1,1,0,0,0],
+                [0,0,0,0,1,1,0,0,0,0],
+            ];
+            
+            const size = 20;
+            for (let y = 0; y < heartShape.length; y++) {
+                for (let x = 0; x < heartShape[y].length; x++) {
+                    if (heartShape[y][x] === 1) {
+                        let dot = document.createElement('div');
+                        dot.className = 'dot';
+                        dot.style.left = `${x * size + 100}px`;
+                        dot.style.top = `${y * size + 200}px`;
+                        document.body.appendChild(dot);
+                        
+                        setTimeout(() => {
+                            dot.style.opacity = '1';
+                        }, 100 * (x + y));  
+                    }
+                }
+            }
+        }
+    </script>
+
 </body>
 </html>
